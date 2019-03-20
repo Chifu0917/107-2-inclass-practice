@@ -1,0 +1,108 @@
+---
+title: '2019-03-20'
+author: ""
+date: "3/20/2019"
+output: html_document
+---
+```{r}
+dialogue <- c('小明說："明天不用上課。"',
+               '小花說："真的嗎？"')
+
+cat(dialogue, sep="\n")
+
+
+```
+
+```{r}
+aLogical <- c(T,TRUE,F,FALSE,FALSE)
+class(aLogical)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# 加總向量內的所有元素值。
+sum(aLogical)
+```
+
+
+
+```{r}
+studentMajors <- factor(
+  c("經濟系", "經濟系", "法律系")
+)
+```
+
+
+```{r}
+birthdate <- factor(
+  c("台中", "台中", "台中", "台北", "台北")
+)
+```
+
+
+```{r}
+stringInteger <- c("1","2","-11")
+class(stringInteger) # 無法進行數值運算
+```
+
+
+
+
+```{r}
+birthdate <- as.integer(stringInteger)
+class(trueInteger) # 可以進行數值運算
+```
+
+
+```{r}
+levels(studentMajors)
+```
+
+```{r}
+library(lubridate)
+```
+
+
+
+
+```{r}
+dtObject<-ymd_hms("1970-01-01 00:02:53") 
+```
+
+```{r}
+dtObjectVector<-ymd_hms(
+  c("1970-01-01 00:02:53",
+    "1980-02-11 11:25:22")
+)
+```
+
+```{r}
+class(dtObject)
+```
+
+```{r}
+dtObject
+```
+
+```{r}
+typeof(dtObject)
+levels(dtObject)
+as.integer(dtObject)
+```
+
+
+```{r}
+as.double(dtObjectVector)
+```
+
+```{r}
+Sys.timezone()
+```
+
+```{r}
+twDateTime <- ymd_hms("2019-03-18 14:04:00", tz="Asia/Taipei")
+```
+

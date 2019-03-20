@@ -10,3 +10,85 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 YEAH
+
+```{r}
+a <- 2
+3 -> b
+```
+
+```{r}
+65 + b
+```
+
+```{r}
+0917 -> c
+```
+
+```{r}
+juila <- 87
+pin <- 78
+pun <- 38
+```
+
+```{r}
+a<-5
+a2<-5L
+```
+
+```{r}
+class(a)
+```
+
+
+```{r}
+class(a2)
+```
+
+```{r}
+aVector<-c(5,6,7)
+a2Vector<-c(5L,6L,7L)
+```
+
+```{r}
+class(aVector)
+```
+```{r}
+class(a2Vector)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
