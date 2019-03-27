@@ -1,11 +1,25 @@
 ---
 title: '2019-03-27'
-author: "林茂廷"
+author: "李季芙"
 date: "3/27/2019"
 output: html_document
 ---
+```{r}
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r}
+Sys.timezone()
+```
+
+```{r}
+twDateTime <- ymd_hms("2019-03-18 14:04:00", tz="Asia/Taipei")
+
+```
+
+
 
