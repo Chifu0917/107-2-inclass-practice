@@ -28,3 +28,194 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r}
+library(stringr)
+```
+
+subset
+```{r}
+course <- c("個體經濟學","投資學","總體經濟學")
+course
+str_subset(course,"經濟學")
+```
+
+```{r}
+course1 <- c("珍珠奶茶","椰果奶茶","檸檬紅茶","百香綠茶","布丁奶茶")
+course1
+str_subset(course1,"奶茶")
+str_detect(course1,"奶茶")
+
+```
+
+```{r}
+studentID<-c(
+  '410177115','410176080','410174233','410177011','410182045','410176014')
+str_sub(studentID)
+```
+
+```{r}
+studentID<-c(
+  '410177115','410176080','410174233','410177011','410182045','410176014')
+系別<-str_sub(studentID,5,6)
+系別
+入學年<-str_sub(studentID,2,4)
+入學年
+```
+
+```{r}
+month <- c("3","4","5")
+day <- c("9","8","7")
+char1 <- c("月","月","月")
+char2 <- c("日","日","日")
+month
+char1
+day 
+char2
+str_c(month,char1,day,char2)
+```
+
+```{r}
+str_c(month,c("月"),day,c("日"))
+str_c(month,"月",day,"日")
+```
+
+```{r}
+month
+day
+str_c(month,day, sep="-")
+str_c(month,day, sep="/")
+```
+
+```{r}
+month1 <-c("3","3","8","9")
+day3  <- c("12","17","18","17")
+char3 <- c("月")
+char4  <- c("日")
+str_c(month1,char3,day3,char4)
+```
+
+```{r}
+dates <- c("3-11", "4-5",  "2-7")
+str_split(dates,"-")
+```
+
+```{r}
+dates
+str_replace(dates,"-","月")
+```
+
+```{r}
+dates2 <- c("3-11-2019", "4-5-2017",  "2-7-2015")
+dates2
+str_replace(dates2,"-","/")
+str_replace_all(dates2,"-","/")
+```
+
+```{r}
+library(readr)
+githubData <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/githubData.csv")
+username <- githubData$`GitHub username`[11:16]
+reponame <- githubData$`GitHub repo name`[11:16]
+```
+
+將username與reponame合併成Github repo網址
+```{r}
+username
+reponame
+str_c("https://github.com/",username,"/",reponame)
+```
+
+
+
+試著將生日變成“西元YYYY年毫米DD月日”型式。
+```{r}
+library(readr)
+filmVotingData <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/%E7%AC%AC%E4%B8%89%E5%B1%86%E7%B6%93%E6%BF%9F%E6%92%AD%E5%AE%A2%E7%AB%B6%E8%B3%BD%E5%8F%83%E8%B3%BD%E4%BD%9C%E5%93%81%E6%8A%95%E7%A5%A8%E7%B5%90%E6%9E%9C%E6%A8%A3%E6%9C%AC%20-%20Sheet1.csv")
+birthday<-filmVotingData$`出生西元年月日（驗證本人用）`
+```
+
+```{r}
+birthday
+```
+
+```{r}
+year <- str_sub(birthday,1,4)
+month <- str_sub(birthday,5,6)
+day<- str_sub(birthday,7,8)
+str_c("西元",year,"年",month,"月",day,"日")
+```
+
+```{r}
+year4 <- c("099/01","099/02","099/03")
+```
+
+```{r}
+str_split(year4,"/")
+```
+
+```{r}
+year5 <- str_sub(year4,1,3)
+year55 <- as.integer(year5) 
+mounth6 <- str_sub(year4,5,6)
+mounth6 <- as.integer(mounth6)
+year55
+mounth6
+```
+
+```{r}
+newyear <- year55+1911
+newyear
+```
+
+```{r}
+str_c()
+```
+
+```{r}
+a<-c(1:3)
+typeof(a)
+a
+```
+
+```{r}
+aWithNames <- c(
+  a1=1,
+  a2=2,
+  a3=3
+)
+typeof(a)
+aWithNames
+```
+```{r}
+
+```
+
+```{r}
+b1<-list("a","b",c(1:10))
+typeof(b1)
+b1
+```
+
+```{r}
+b2<-list(
+  first="a",
+  second="b",
+  third=c(1:10))
+```
+
+```{r}
+b1
+b2
+```
+
+
+
+
+
+
+
+
+
+
+
