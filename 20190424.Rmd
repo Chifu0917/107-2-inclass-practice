@@ -30,18 +30,162 @@ plot(pressure)
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
+#Matrix只是vector的一種新的排列形式，雖然它的class自成一格為matrix，但它的type依然會是它架構根源的atomic vector形式。
+
+
+#Matrix
+
+```{r}
+Mat1 <- matrix(
+  c(1:6), 2,3
+)
+Mat1
+```
+
+```{r}
+class(Mat1)
+typeof(Mat1)
+```
+
+```{r}
+Mat2 <- matrix(
+  c("a","b","c","d"), 2, 2
+)
+Mat2
+class(Mat2)
+typeof(Mat2)
+```
+
+```{r}
+Mat2[[2]]
+Mat2[c(T,F,F,T)]
+Mat2[2,]
+```
 
 
 
 
 
+#Data Frame
+
+#list：因為三個變數向量的type不相同，只能用list儲存。
+```{r}
+StuList <- list(
+  學號=c(172,214,322,425,517),
+  姓名=c("小明","大雄","胖虎","小新","大白"),
+  成績=c(80,60,90,70,50)
+  )
+StuList 
+```
+
+#視覺上產生一個Data Frame的幻覺 ,但永遠以list來處理
+```{r}
+StuDF <- data.frame(
+  學號=c(172,214,322,425,517),
+  姓名=c("小明","大雄","胖虎","小新","大白"),
+  成績=c(80,60,90,70,50)
+  )
+StuDF 
+```
+
+```{r}
+StuDF[[2]][[3]]
+StuList[[2]][[3]]
+StuDF[["姓名"]][[3]]
+```
+#data.frame()遇到變數輸入為character class時，內定會被轉成factor。
+```{r}
+class(StuDF$姓名)
+```
 
 
+#將factor轉成character
+```{r}
+StuDF$姓名 <- as.character(StuDF$姓名)
+class(StuDF$姓名)
+```
 
 
+```{r}
+class(StuList)
+as.data.frame(StuList) -> StuDF3
+
+class(StuDF3)
+StuDF3
+as.data.frame(StuList,stringsAsFactors = F) -> StuDF4
+class(StuDF4)
+StuDF4
+```
 
 
+```{r}
+StuDF2 <- data.frame(
+  學號=c(172,214,322,425,517),
+  姓名=c("小明","大雄","胖虎","小新","大白"),
+  成績=c(80,60,90,70,50),
+  stringsAsFactors = FALSE
+  )
+StuDF2 
+```
 
+
+#[.R , .C] object extraction
+
+```{r}
+LETTERS # R內設元素值為英文字母群的character vector
+chosenLETTERS <- LETTERS[1:15]
+matObj1 <- matrix(chosenLETTERS,5,3)
+matObj1
+```
+
+```{r}
+chosenLETTERS[[8]]
+matObj1[[8]]
+```
+
+```{r}
+matObj1
+matObj1[3,2]
+matObj1[c(F,F,T,F,F),c(F,T,F)]
+```
+ 
+#tolower(m) 轉成小寫
+#toupper(m) 轉成大寫
+
+
+```{r}
+matObj1
+matObj1[c(1,4),c(2,3)]
+```
+
+```{r}
+matObj1[c(T,F,F,T,F),c(F,T,T)]
+```
+
+
+#課堂練習
+```{r}
+library(readr)
+classSurvey <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/classSurvey.csv")
+```
+
+#取出**性別,學分數**
+Solution1:
+```{r}
+classSurvey[,4:5]
+classs
+classSurvey[,c(F,F,F,T,T,F)]
+```
+
+Solion2:
+```{r
+classSurvey[c(1:60),c(4:5)]
+```
+
+#
+```{r}
+
+```
 
 
 
