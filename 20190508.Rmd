@@ -126,26 +126,59 @@ westDates
 ```
 
 
-#7.2
-#使用sampledTranscriptData$學屆 <-及sampledTranscriptData$系碼 <- 在sampledTranscriptData新增「學屆」及「系碼」兩個的新元素，其元素值放在<-右側定義。
-#「學屆」元素值代表的是每一位同學的入學學年，可由學號的第2到4位字元產生，「系碼」即學號的第5到6位字元；如410073298即為100學年入學，系碼73。另本題的答案物件為sampledTranscriptData。（使用sampledTranscriptData$學屆 <-及sampledTranscriptData$系碼 <-，將個別由學號取出之值放在<-右側即可在sampleTranscriptData新增這兩個元素。）
+#7
 ```{r}
 load("sampledTranscriptData.Rda")
 names(sampledTranscriptData) <- 
   c('學號','學期成績','學分數','學年','學期','必選修類別（必／選／通）','系級','科目名稱','年級','學屆')
 ```
+#7.1
+#取出科目名稱為「科目204」的學期成績，計算該科的當人比例（子樣本中成績不及格的比例）將此值存在答案物件failRate裡（為numeric/double class）。
+```{r}
+(sampledTranscriptData$)
+```
 
+
+
+#7.2
+#使用sampledTranscriptData$學屆 <-及sampledTranscriptData$系碼 <- 在sampledTranscriptData新增「學屆」及「系碼」兩個的新元素，其元素值放在<-右側定義。
+#「學屆」元素值代表的是每一位同學的入學學年，可由學號的第2到4位字元產生，「系碼」即學號的第5到6位字元；如410073298即為100學年入學，系碼73。另本題的答案物件為sampledTranscriptData。（使用sampledTranscriptData$學屆 <-及sampledTranscriptData$系碼 <-，將個別由學號取出之值放在<-右側即可在sampleTranscriptData新增這兩個元素。）
 ```{r}
 
 ```
 
 
+#7.3
+```{r}
+sampledTranscriptData$學系 <- str_replace_all(sampledTranscriptData$系級,"(1)|(2)|(3)|(4)"),"")
+sampledTranscriptData$學系
+```
+
+```{r}
+sampledTranscriptData$學系 <- str_replace(sampledTranscriptData$系級,"[1234]","")
+sampledTranscriptData$學系
+```
+
+```{r}
+sampledTranscriptData$學系  <- str_replace(sampledTranscriptData$系級,"[:digit:]","")
+sampledTranscriptData$學系
+```
+
+#7.4
+```{r}
+(sampledTranscriptData$系碼!="73" & 
+   sampledTranscriptData$學系=="經濟學系") -> logiCheck
+
+sampledTranscriptData$學號[logiCheck] 
+
+unique(sampledTranscriptData$學號[logiCheck]) -> changeMajorStudent
+
+changeMajorStudent
+```
 
 
 
-
-
-
+#7.5
 
 
 
