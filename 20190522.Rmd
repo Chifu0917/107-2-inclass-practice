@@ -37,25 +37,175 @@ invoiceList <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data
 col_types = cols(訂單時間.以訂單時區顯示. = col_character()))
 names(invoiceList)[[2]] <- "訂單時區之下單時間"
 ```
+#6.2
+請將每個「訂單時區之下單時間」依其「訂單時區」轉成UTC時間date time class（即POSIXct class）後，存在「UTC時間」對應的位置裡。最後一行請打本題答案物件invoiceList。
+```{r}
+(invoiceList$訂單時區 == "America/New_York" )-> nyLogical
+(invoiceList$訂單時區 == "Asia/Taipei") -> tpLogical
+
+invoiceList$nyLogical <- nyLogical
+invoiceList$tpLogical <- tpLogical
+
+library(lubridate)
+ymd_hms(invoiceList$`訂單時區之下單時間`[nyLogical],
+        tz="America/New_York") -> nyDateTime #EXTRACT
+
+invoiceList$UTC時間[nyLogical] <- 
+  with_tz(nyDateTime,tzone = "UTC") #REPLACEMENT
+
+ymd_hms(invoiceList$`訂單時區之下單時間`[tpLogical],
+        tz="Asia/Taipei") -> tpDateTime
+
+invoiceList$UTC時間[tpLogical]<-
+  with_tz(tpDateTime,tzone = "UTC")
+
+invoiceList
+```
+
+#8.2
+
+```{r}
+library(readr)
+transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
+```
+
+```{r}
+studentID <-"92aS67fee" 
+transcriptDataFinal$學號==studentID -> logiChosenStudent
+
+subSample <- transcriptDataFinal[logiChosenStudent,]
+
+sum(subSample$學期成績*subSample$學分數)/
+  sum(subSample$學分數) -> GPA
+```
+#如果常常要算學生的GPA，我們可以定義一個「輸入學號便可輸出其GPA」的函數，由前面程序，我們知道
+
+studentID是我們的輸入
+
+GPA是我們要的輸出
+```{r}
+gpa_fun <- function(studentID){
+ transcriptDataFinal$學號==studentID -> logiChosenStudent
+
+subSample <- transcriptDataFinal[logiChosenStudent,]
+
+sum(subSample$學期成績*subSample$學分數)/
+  sum(subSample$學分數) -> GPA
+  return(GPA)
+}
+```
+#使用gpa_fun()計算“479W9ee8e”，“9efW9aea5”兩位同學平均成績
+```{r}
+gpa_fun("479W9ee8e")
+gpa_fun("9efW9aea5")
+```
+
+
+請把以America/ New_York時區輸入的時間字串“1973-02-21 12:05:22”，轉成日期時間類，再改成Asia/Taipei時間顯示。
+ymd_hms_tzChange（input，fromTzone，toTzone）
+```{r}
+library(lubridate)
+fromTzone <- ymd_hms("1973-02-21 12:05:22", tz="America/New_York")
+toTzone <- with_tz(utctime1,tzone="Asia/Taipei")
+
+ymd_hms_tzChange <- function(input,fromTzone,toTzone){
+  time1 <- ymd_hms(input, tz=fromTzone)
+  answer <- with_tz(time1,tzone=toTzone)
+  
+  return(answer)
+}
+ymd_hms_tzChange("1973-02-21 12:05:22","America/New_York","Asia/Taipei")
+```
+
+
+```{r}
+library(stringr)
+sample(99:103,15,replace = T)-> yy
+sample(1:12,15,replace=T)-> mm
+str_c("民國",str_pad(yy,3,"left","0"),"年",mm,"月") -> twDates
+```
+
+```{r}
+library(stringr); library(lubridate)
+yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+mm<-str_extract(twDates,"[:digit:]+(?=月)")
+yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+yyyymmdd
+```
+
+```{r}
+date_convert_twYM <- function(twDates){
+  yy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+  mm<-str_extract(twDates,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  
+  return(yyyymmdd)
+}
+```
+#錯誤
+```{r}
+date_convert_twYM<-function(x){
+  yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+mm<-str_extract(twDates,"[:digit:]+(?=月)")
+yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+return(yyyymmdd)
+}
+```
+
+#更正
+```{r}
+date_convert_twYM<-function(x){
+  yyyy<-as.integer(str_extract(x,"(?<=(民國))[:digit:]+"))+1911
+mm<-str_extract(x,"[:digit:]+(?=月)")
+yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+return(yyyymmdd)
+}
+```
 
 
 
+#8.1.2預設值默認值
+```{r}
+utility_cobb_douglass2 <- function(x,y,.alpha=0.5,.beta=0.5){
+  utilValue <- x^.alpha*y^.beta
+  return(utilValue)
+}
+```
+
+```{r}
+utility_cobb_douglass2 <- function(x,y,.alpha=0.5,.beta=0.5){
+  utilValue <- x^.alpha*y^.beta
+  return(utilValue)
+}
+```
+
+```{r}
+utility_cobb_douglass2(1,2) # 使用預設值
+utility_cobb_douglass2(1,2,0.5,0.8) # 自定參數值
+```
+#沒有預設值
+```{r}
+date_convert_twYM <- function(twDates){
+  #twDates
+  yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+  mm<-str_extract(twDates,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,"01",sep="-"))
+  return(yyyymmdd)
+}
+```
 
 
+#先前date_convert_twYM()函數一律把年月資料加上「01」日，請改寫函數讓“01”為「日」的預設值。
+```{r}
+date_convert_twYM <- function(twDates,dd="01"){
+  yyyy<-as.integer(str_extract(twDates,"(?<=(民國))[:digit:]+"))+1911
+  mm<-str_extract(twDates,"[:digit:]+(?=月)")
+  yyyymmdd <- ymd(str_c(yyyy,mm,dd,sep="-"))
+  return(yyyymmdd)
+}
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#建議遇到一個大括號就內縮
 
 
 
