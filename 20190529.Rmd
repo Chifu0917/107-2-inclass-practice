@@ -28,3 +28,166 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+#8.1.3返回與輸入
+#函數程序並不一定要有return與input
+```{r}
+now <- function(){
+  currentDateTime <- Sys.time()
+  hh<-hour(currentDateTime)
+  mm<-minute(currentDateTime)
+  cat("現在是",hh,"點",mm,"分")
+}
+now
+```
+
+
+#browseURL()函數可以輸入網址後自動開啟瀏覽器連到該網頁，如：browseURL("https://www.ntpu.edu.tw")
+#請寫一個textbookURL函數，執行textbookURL()會自動開啟課程網頁。
+
+```{r}
+textbookURL <- function(){
+  browseURL("https://www.ntpu.edu.tw")
+}
+textbookURL()
+```
+
+
+#8.1.4 多個output值
+
+```{r}
+library(readr)
+transcriptDataFinal <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/transcriptDataFinal.csv")
+```
+#只有一個值
+```{r}
+gpa_fun <- function(studentID){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+  
+  subSample <- transcriptDataFinal[logiChosenStudent,]
+  
+  sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+  return(GPA)
+}
+```
+
+#得到多個output->要用list
+```{r}
+gpa_fun2 <- function(studentID){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+  
+  subSample <- transcriptDataFinal[logiChosenStudent,]
+  
+  sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+  return(
+    list(
+      平均成績=GPA,
+      成績單=subSample
+      )
+  )
+}
+```
+
+```{r}
+gpa_fun2("92aS67fee") -> outputValue
+outputValue$平均成績
+outputValue$成績單
+```
+
+#創造一個demand_supply_fun(P,a,b,c,d)，它會輸出一個list包含三個元素：供給量，需求量，超額供給量
+```{r}
+demand_supply_fun <- function(P,a,b,c,d){
+    Qs<-a+b*P
+    Qd<-c-d*P
+    return(
+      list(供給量=Qs,
+           需求量=Qd,
+           超額供給量=Qs-Qd)
+    )
+}
+```
+
+
+#8.2依條件執行
+#if(邏輯條件){
+  成立時執行
+}
+```{r}
+a <- readline(prompt = "請輸入一個數字： ")
+if(a < 0) {
+  print("a為負值")
+}
+```
+
+```{r}
+supply_fun2 <- function(P,a,b){
+  Qs <- a+b*P
+  if(P>=0) {
+    return(Qs)
+  }
+}
+supply_fun2(P=-1,0,1)
+supply_fun2(P=2,0,1)
+```
+
+#if(邏輯條件){
+  成立時執行
+} else {
+  不成立時執行
+}
+
+#輸入-5
+```{r}
+a <-  readline(prompt = "請輸入一個數字： ")
+if(a < 0) {
+  print("a為負值")
+} else {
+  print("a不為負值")
+}
+```
+
+```{r}
+supply_fun3 <- function(P,a,b){
+  Qs <- a+b*P
+  if(P < 0) {
+    message("P不能為負值") # 在螢幕出現的「錯誤」提示，沒有輸出任何值
+  } else {
+    return(Qs)
+  }
+}
+supply_fun3(P=-1,0,1)
+supply_fun3(P=2,0,1)
+```
+
+
+#print()是單純的訊息輸出，而message()是用在「錯誤」狀況下的訊息顯示。兩者在程式除錯時，會有明顯差別。
+
+```{r}
+gpa_fun <- function(studentID){
+  if(studentID %in% transcriptDataFinal$學號){
+  transcriptDataFinal$學號==studentID -> logiChosenStudent
+
+  subSample <- transcriptDataFinal[logiChosenStudent,]
+
+  sum(subSample$學期成績*subSample$學分數)/
+    sum(subSample$學分數) -> GPA
+  return(GPA)
+}
+  else {
+    message("No such ID")
+  }
+}
+
+gpa_fun("92aS67fee") 
+gpa_fun("aa829838s") 
+```
+
+
+
+
+
+
+
+
